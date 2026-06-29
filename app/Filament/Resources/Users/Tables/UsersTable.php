@@ -2,13 +2,15 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
+use Filament\Tables\Table;
+use Filament\Tables\Columns\TextColumn;
+
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
-use Filament\Actions\DeleteAction; // ✅ FIX ERROR KAMU
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
+
 use STS\FilamentImpersonate\Actions\Impersonate;
 
 class UsersTable
@@ -28,6 +30,7 @@ class UsersTable
                     ->dateTime()
                     ->sortable(),
 
+                // RELASI LECTURER (benar)
                 TextColumn::make('lecturer.full_name')
                     ->label('Lecturer')
                     ->sortable()
@@ -44,12 +47,14 @@ class UsersTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
-                DeleteAction::make(), // ✅ SUDAH BENAR
+                DeleteAction::make(), 
                 Impersonate::make()->redirectTo(url('/admin')),
             ])
+
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
